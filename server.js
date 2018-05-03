@@ -1,5 +1,5 @@
 var express = require('express');
-var exphbs = require('express-handlebars')
+var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var path = require('path');
 
@@ -9,7 +9,10 @@ var router = require('./controllers/burgers_controller');
 var app = express();
 var PORT = process.env.PORT || 3000;
 
-app.use(express.static("public"));
+//db
+var db = require('./models');
+
+app.use(express.static('public'));
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
@@ -22,10 +25,11 @@ app.use('/', router);
 
 //app.use('/api', apiRoutes);
 
-// Starts the server to begin listening
+// Sync DB & Starts the server to begin listening
 // =============================================================
-app.listen(PORT, function() {
-  console.log('App listening on PORT ' + PORT);
+
+db.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log('App listening on PORT ' + PORT);
+  });
 });
-
-

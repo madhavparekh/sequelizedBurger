@@ -1,49 +1,40 @@
 var express = require('express');
 var path = require('path');
-var connection = require('../config/connection');
-var orm = require('../config/orm');
-
-//db elements
-var table = 'burgers';
-var name = 'burger_name';
-var url = 'picurl';
-var devouvred = 'devoured';
 
 var router = express.Router();
 
+//db
+var db = require('../models');
+
 router.get('/', (req, res) => {
   var avail = {};
-  
-  orm.selectWhere(table, devouvred, false, (data) => {
+
+  db.Burgers.findAll({
+    where: { devoured: false },
+  }).then((data) => {
     avail.avail_burgers = data;
   });
-  orm.selectWhere(table, devouvred, true, (data) => {
-    avail.consumed_burgers = data;
 
+  db.Burgers.findAll({
+    where: { devoured: true },
+  }).then((data) => {
+    avail.consumed_burgers = data;
+    console.log(avail);
     res.render('index', avail);
   });
 });
 
-router.get('/create', (req, res) => {
-  res.render('create', (req, res));
-});
-
 router.post('/create', (req, res) => {
-  orm.insertOne(
-    table,
-    [name, url],
-    [req.body.burger_name, req.body.picurl],
-    (data) => {
-      res.redirect('/');
-    }
-  );
-  // res.render('create', (req, res));
+  db.Burgers.create(req.body).then((data) => {
+    res.redirect('/');
+  });
 });
 
 router.put('/api', (req, res) => {
   var condition = `id = ${req.body.id}`;
-  orm.updateOne(table, { devoured: req.body.devoured }, condition, (data) => {
-
+  db.Burgers.update(req.body, {
+    where: { id: req.body.id },
+  }).then((data) => {
     res.end();
   });
 });
