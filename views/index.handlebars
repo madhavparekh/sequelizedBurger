@@ -8,118 +8,25 @@
         </p>
     </div>
     <div class="w-75 m-auto">
-        <div class="row justify-content-center">
-            <div class="col-5">
-                <div id="availBurgers" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        {{#each avail_burgers}}
-                        <div class="carousel-item {{#unless @index}}active{{/unless}}">
-                            <img class="d-block w-100" src="{{picurl}}" alt="{{burger_name}}" width="300" height="400">
-                            <div class="text-center bg-light p-2">
-                                <h4>{{burger_name}}</h4>
-                            </div>
-                        </div>
-                        {{/each}}
-                    </div>
-                    <a class="carousel-control-prev" href="#availBurgers" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#availBurgers" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <div class="container my-5">
-                    {{#each avail_burgers}}
-                    <div class="card text-center my-2 p-auto bg-light" style="width: 100%">
-                        <div class="card-body">
-                            <h5 class="card-title">{{burger_name}}</h5>
-                            <button type="button" data-id={{id}} data-devoured={{devoured}} class="btn btn-dark devour">Devour</button>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
 
-            </div>
-            <div class="col-5">
-                <div id="devouredBurger" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        {{#each consumed_burgers}}
-                        <div class="carousel-item {{#unless @index}}active{{/unless}}">
-                            <img class="d-block w-100" src="{{picurl}}" alt="{{burger_name}}" width="300" height="400">
-                            <div class="text-center bg-light p-2">
-                                <h4>{{burger_name}}</h4>
-                            </div>
-                        </div>
-                        {{/each}}
+        <div class="customer">
+            <form action="/login" method="POST" class="form-group">
+                <div class="row justify-content-center align-items-end">
+                    <div class="col-6">
+
+                        <label for="name">Log in with your name</label>
+                        <input type="text" class="form-control" name="name" placeholder="John Doe" minlength="4" required>
                     </div>
-                    <a class="carousel-control-prev" href="#devouredBurger" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#devouredBurger" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <div class="container my-5">
-                    {{#each consumed_burgers}}
-                    <div class="card text-center my-2 p-auto bg-light" style="width: 100%">
-                        <div class="card-body">
-                            <h5 class="card-title">{{burger_name}}</h5>
-                            <button type="button" data-id={{id}} data-devoured={{devoured}} class="btn btn-dark devour">Re Craft</button>
-                        </div>
+                    <div class="col-2">
+                        <button class="btn btn-large btn-dark" type="submit">Log In</button>
                     </div>
-                    {{/each}}
                 </div>
-            </div>
+            </form>
+
         </div>
     </div>
-    <!-- create Modal -->
-    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">Craft Here</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="/create" method="POST" class="form-group">
-                    <div class="row justify-content-center align-items-end">
-                        <div class="col-6">
-                            <label for="name">Name your burger</label>
-                            <input type="text" class="form-control" name="burger_name" aria-describedby="helpId" placeholder="California ABLT Burger"
-                                minlength="4" required>
-                            <label for="url">URL to your burger's picture</label>
-                            <input type="url" class="form-control" name="picurl" aria-describedby="helpId" placeholder="http://www.xyz.com/burger.jpg"
-                                minlength="10" maxlength="500" required>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-large btn-dark" type="submit">CREATE</button>
-                        </div>
-                    </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- devoured Modal -->
-    <div class="modal fade" id="devouredModal" tabindex="-1" role="dialog" aria-labelledby="devouredModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="devouredModalLabel"></h5>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 </div>
 
 <!-- Optional JavaScript -->
@@ -127,4 +34,3 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-<script src="/assets/js/frontEnd.js"></script>
